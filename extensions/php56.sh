@@ -95,3 +95,10 @@ if [ -z "${EXTENSIONS##*,sqlsrv,*}" ]; then
     echo "---------- Install sqlsrv ----------"
 	echo "pdo_sqlsrv requires PHP >= 7.1.0, installed version is ${PHP_VERSION}"
 fi
+if [ -z "${EXTENSIONS##*,memcache,*}" ]; then
+    echo "---------- Install memcache ----------"
+    mkdir memcache \
+    && tar -xf pecl-memcache-NON_BLOCKING_IO_php7.tar.gz -C memcache --strip-components=1 \
+    && ( cd memcache && phpize && ./configure  && make ${MC} && make install ) \
+    && docker-php-ext-enable memcache
+fi

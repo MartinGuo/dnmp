@@ -103,3 +103,10 @@ if [ -z "${EXTENSIONS##*,sqlsrv,*}" ]; then
     printf "\n" | pecl install sqlsrv
     docker-php-ext-enable sqlsrv
 fi
+if [ -z "${EXTENSIONS##*,memcache,*}" ]; then
+    echo "---------- Install memcache ----------"
+    mkdir memcache \
+    && tar -xf pecl-memcache-NON_BLOCKING_IO_php7.tar.gz -C memcache --strip-components=1 \
+    && ( cd memcache && phpize && ./configure  && make ${MC} && make install ) \
+    && docker-php-ext-enable memcache
+fi
